@@ -1,16 +1,83 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import products from '../data/products.json';
+const featured = products.filter((p) => ['scroll-backpack','blossom-purse','offcut-origami-bifold'].includes(p.slug));
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="David Dindi | Considered Leather Goods & Manufacturing" description="Explore David Dindi leather goods and discover custom manufacturing services. Designed around craftsmanship, character and long-term use.">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Craftsmanship with character</span>
+        <h1>Made to be part of your story.</h1>
+        <p class="lead">Considered leather goods and custom manufacturing, grounded in thoughtful design, practical detail and materials with character.</p>
+        <div class="actions">
+          <a class="button button-primary" href="/products/">Explore products</a>
+          <a class="button button-secondary" href="/manufacturing/">Manufacturing enquiries</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Abstract brand artwork">
+        <div class="hero-art-copy">
+          <span class="eyebrow" style="color:#f5e6d3">David Dindi</span>
+          <strong>Own it.<br/>For a Lifetime.</strong>
+          <p>Individual character. Considered utility. Made with purpose.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Two ways to work with us</span><h2>One parent brand.<br/>Two clear paths.</h2></div>
+        <p>Whether you are looking for a piece to carry every day or a partner to help make your product idea real, start in the right place.</p>
+      </div>
+      <div class="grid-2">
+        <article class="split-panel">
+          <span class="pill">For individuals</span>
+          <h2 style="margin-top:1rem">David Dindi</h2>
+          <p>Explore bags, wallets and accessories with thoughtful details and a distinct leather character.</p>
+          <a class="button button-sage" href="/products/">Explore the catalogue</a>
+        </article>
+        <article class="card">
+          <div class="visual"><span>David Dindi Manufacturing</span></div>
+          <div class="card-body">
+            <span class="eyebrow">For brands and businesses</span>
+            <h2>Make your next idea tangible.</h2>
+            <p>Explore custom manufacturing, sampling and production enquiries through a dedicated business-to-business pathway.</p>
+            <a class="button button-primary" href="/manufacturing/">Discuss a project</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section section-muted">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="eyebrow">Selected pieces</span><h2>Made for everyday life.</h2></div>
+        <a href="/products/">View all products →</a>
+      </div>
+      <div class="grid-3">
+        {featured.map((product) => (
+          <a class="card card-link" href={`/products/${product.slug}/`}>
+            <div class="visual"><span>{product.category}</span></div>
+            <div class="card-body">
+              <h3>{product.name}</h3>
+              <p>{product.summary}</p>
+              <div class="price">{product.priceDisplay}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container grid-2" style="align-items:center">
+      <div>
+        <span class="eyebrow">The material has a story</span>
+        <h2>Leather with its own character.</h2>
+        <p class="lead">Natural leather can carry variations in colour, grain and marks. We believe customers should understand the material and know how to care for it.</p>
+        <a class="button button-secondary" href="/leather-philosophy/">Read our leather philosophy</a>
+      </div>
+      <div class="visual" style="min-height:300px;border-radius:24px"><span>Natural texture · Individual character</span></div>
+    </div>
+  </section>
+</BaseLayout>

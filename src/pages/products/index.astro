@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import products from '../../data/products.json';
+---
+<BaseLayout title="Products | David Dindi" description="Explore the David Dindi catalogue of leather bags, wallets and accessories. Contact us to confirm availability and place an enquiry.">
+  <section class="page-hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> / Products</div><span class="eyebrow">The catalogue</span><h1>Considered pieces.<br/>Everyday purpose.</h1><p class="lead">Explore the current catalogue. Availability, colours and final specifications are confirmed with you before an order is agreed.</p></div></section>
+  <section class="section"><div class="container">
+    <div class="search-row">
+      <input id="product-search" type="search" placeholder="Search products…" aria-label="Search products"/>
+      <select id="product-category" aria-label="Filter by category">
+        <option value="">All categories</option><option value="Bags">Bags</option><option value="Wallets">Wallets</option><option value="Small leather goods">Small leather goods</option><option value="Tech Cases">Tech Cases</option>
+      </select>
+    </div>
+    <div class="grid-3" id="product-grid">
+      {products.map((product) => (
+        <article class="card product-card" data-name={product.name.toLowerCase()} data-category={product.category}>
+          <a class="card-link" href={`/products/${product.slug}/`}>
+            <div class="visual"><span>{product.category}</span></div>
+            <div class="card-body">
+              <h3>{product.name}</h3>
+              <p>{product.summary}</p>
+              <div class="price">{product.priceDisplay}</div>
+              <p class="small">View details →</p>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+    <p id="no-results" class="empty-state" hidden>No products match that search. Try another name or category.</p>
+    <p class="small" style="margin-top:1.5rem">Product details are being verified. Please enquire to confirm current stock, colours, pricing and lead times.</p>
+  </div></section>
+  <script>
+    const search = document.querySelector('#product-search');
+    const category = document.querySelector('#product-category');
+    const cards = [...document.querySelectorAll('.product-card')];
+    const empty = document.querySelector('#no-results');
+    function filterProducts() {
+      const q = search.value.trim().toLowerCase();
+      let shown = 0;
+      cards.forEach((card) => {
+        const match = card.dataset.name.includes(q) && (!category.value || card.dataset.category === category.value);
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      empty.hidden = shown > 0;
+    }
+    search.addEventListener('input', filterProducts);
+    category.addEventListener('change', filterProducts);
+  </script>
+</BaseLayout>

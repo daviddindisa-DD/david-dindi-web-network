@@ -1,0 +1,82 @@
+---
+import '../styles/styles.css';
+const { title = 'David Dindi | Own it. For a Lifetime.', description = 'Considered leather goods and custom manufacturing from David Dindi, Cape Town, South Africa.', canonical = 'https://daviddindi.co.za/' } = Astro.props;
+---
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content="David Dindi" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#8B4513" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="David Dindi home">DAVID DINDI<small>OWN IT. FOR A LIFETIME.</small></a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+        <nav class="nav" id="main-nav" aria-label="Main navigation">
+          <a href="/products/">Products</a>
+          <a href="/manufacturing/">Manufacturing</a>
+          <a href="/our-story/">Our story</a>
+          <a href="/leather-philosophy/">Leather philosophy</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="brand" href="/" style="color:white">DAVID DINDI<small style="color:#d9d2df">OWN IT. FOR A LIFETIME.</small></a>
+            <p>Considered leather goods and manufacturing, shaped by craftsmanship, character and long-term use.</p>
+            <p>Crafted in Cape Town, South Africa.</p>
+          </div>
+          <div>
+            <h3>Explore</h3>
+            <ul class="footer-links">
+              <li><a href="/products/">Products</a></li>
+              <li><a href="/manufacturing/">David Dindi Manufacturing</a></li>
+              <li><a href="/our-story/">Our story</a></li>
+              <li><a href="/contact/">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Customer care</h3>
+            <ul class="footer-links">
+              <li><a href="/leather-philosophy/">Leather philosophy</a></li>
+              <li><a href="/policies/how-to-order/">How to order</a></li>
+              <li><a href="/policies/shipping/">Shipping</a></li>
+              <li><a href="/policies/returns-repairs/">Returns & repairs</a></li>
+              <li><a href="/policies/privacy/">Privacy</a></li>
+              <li><a href="/policies/terms/">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© {new Date().getFullYear()} David Dindi. All rights reserved.</span>
+          <span>Website built for portability and performance.</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const menuButton = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('#main-nav');
+      menuButton?.addEventListener('click', () => {
+        const open = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!open));
+        nav?.classList.toggle('is-open', !open);
+      });
+    </script>
+  </body>
+</html>

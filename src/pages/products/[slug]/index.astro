@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import products from '../../../data/products.json';
+export function getStaticPaths() {
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+const { product } = Astro.props;
+const title = `${product.name} | David Dindi`;
+const description = `${product.summary} Contact David Dindi to confirm current availability and details.`;
+---
+<BaseLayout title={title} description={description} canonical={`https://daviddindi.co.za/products/${product.slug}/`}>
+  <section class="page-hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> / <a href="/products/">Products</a> / {product.name}</div><span class="eyebrow">{product.category}</span><h1>{product.name}</h1><p class="lead">{product.summary}</p></div></section>
+  <section class="container product-layout">
+    <div class="visual product-visual" aria-label={`Placeholder image for ${product.name}`}><span>Product photography to be added</span></div>
+    <div class="product-details">
+      <h2>{product.name}</h2>
+      <div class="price">{product.priceDisplay}</div>
+      <p>{product.description}</p>
+      <div class="notice"><strong>Enquire before ordering</strong><br/>Please contact us to confirm current availability, colour options, final specifications and delivery arrangements.</div>
+      <div class="actions">
+        <a class="button button-primary" href={`/contact/?product=${product.slug}`}>Enquire about this product</a>
+        <a class="button button-secondary" href="/products/">Back to products</a>
+      </div>
+      <dl class="product-meta">
+        <dt>Materials</dt><dd>{product.materials.join(', ')}</dd>
+        <dt>Features</dt><dd><ul class="list-clean">{product.features.map((feature) => <li>{feature}</li>)}</ul></dd>
+        <dt>Dimensions</dt><dd>{product.dimensions}</dd>
+        <dt>Colour options</dt><dd>{product.colours.join(', ')}</dd>
+      </dl>
+      <p class="small">{product.notes}</p>
+    </div>
+  </section>
+  <section class="section section-muted"><div class="container"><div class="notice"><strong>Natural leather notice</strong><br/>Leather can vary in colour, grain and visible marks. These natural characteristics can make each piece individual. Read our <a href="/leather-philosophy/">leather philosophy and care notes</a> before ordering.</div></div></section>
+</BaseLayout>

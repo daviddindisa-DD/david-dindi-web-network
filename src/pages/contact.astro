@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const query = Astro.url.searchParams;
+const product = query.get('product') ?? '';
+const type = query.get('type') ?? '';
+---
+<BaseLayout title="Contact David Dindi" description="Contact David Dindi about product availability, orders, or manufacturing projects.">
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / Contact</div>
+      <span class="eyebrow">Let's talk</span>
+      <h1>Tell us what you have in mind.</h1>
+      <p class="lead">For product availability, orders or manufacturing projects, choose the enquiry path that fits your needs.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <!-- WhatsApp Product Enquiry -->
+      <article class="card">
+        <div class="card-body">
+          <span class="eyebrow">Consumer products</span>
+          <h2>Product enquiries</h2>
+          <p>Ask about current availability, colours, pricing, sizing, care or delivery arrangements.</p>
+          <a class="button button-primary" href="https://wa.me/27816463703?text=Hi%20David%20Dindi!%20I'm%20interested%20in%20a%20product." target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+          <p class="small">We typically respond within 2-4 hours on business days.</p>
+        </div>
+      </article>
+
+      <!-- Formspree Manufacturing Enquiry Form -->
+      <article class="card">
+        <div class="card-body">
+          <span class="eyebrow">Business-to-business</span>
+          <h2>Manufacturing projects</h2>
+          <p>Share your product brief, target quantities, materials, references and desired timeline.</p>
+          
+          <div data-fs-success></div>
+          <div data-fs-error></div>
+
+          <form id="mfg-form">
+            <input type="hidden" name="enquiry_type" value="manufacturing" />
+            <input type="hidden" name="product" value={product} />
+            <input type="hidden" name="source" value={type} />
+
+            <label for="mfg-name">Your name</label>
+            <input type="text" id="mfg-name" name="name" data-fs-field required />
+            <span data-fs-error="name"></span>
+
+            <label for="mfg-email">Your email</label>
+            <input type="email" id="mfg-email" name="email" data-fs-field required />
+            <span data-fs-error="email"></span>
+
+            <label for="mfg-phone">Phone number (optional)</label>
+            <input type="tel" id="mfg-phone" name="phone" data-fs-field />
+
+            <label for="mfg-brief">Project brief</label>
+            <textarea id="mfg-brief" name="message" rows="5" data-fs-field required></textarea>
+            <span data-fs-error="message"></span>
+
+            <button type="submit" class="button button-secondary" data-fs-submit-btn>Send manufacturing enquiry</button>
+          </form>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <div class="notice">
+        <strong>Enquiry context:</strong>
+        {product ? `You arrived from the ${product.replaceAll('-', ' ')} product page.` : type === 'manufacturing' ? 'You are enquiring about manufacturing.' : 'Please include the product name or project type in your message.'}
+      </div>
+    </div>
+  </section>
+
+  <!-- Formspree AJAX library -->
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#mfg-form', formId: 'xdeeznyv' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+  <style>
+    form label { display: block; font-weight: 600; margin: 1rem 0 0.3rem; }
+    form input, form textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+    form [data-fs-error] { color: #b00020; font-size: 0.85em; display: block; margin-top: 0.25rem; }
+    [data-fs-success] { color: #2e7d32; padding: 1rem; background: #e8f5e8; border-radius: 8px; margin-bottom: 1rem; }
+    [data-fs-success]:empty, [data-fs-error]:empty { display: none; }
+  </style>
+</BaseLayout>
